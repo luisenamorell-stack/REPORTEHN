@@ -1,0 +1,163 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 197 43% 95%;
+    --foreground: 205 60% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 205 60% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 205 60% 10%;
+    --primary: 205 59% 44%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 180 72% 95%;
+    --secondary-foreground: 205 59% 44%;
+    --muted: 197 20% 90%;
+    --muted-foreground: 205 20% 40%;
+    --accent: 180 72% 59%;
+    --accent-foreground: 205 60% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 205 30% 85%;
+    --input: 205 30% 85%;
+    --ring: 205 59% 44%;
+    --radius: 0.75rem;
+    --chart-1: 205 59% 44%;
+    --chart-2: 180 72% 59%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 205 60% 10%;
+    --sidebar-primary: 205 59% 44%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 197 43% 95%;
+    --sidebar-accent-foreground: 205 59% 44%;
+    --sidebar-border: 205 30% 90%;
+    --sidebar-ring: 205 59% 44%;
+  }
+
+  .dark {
+    --background: 205 60% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 205 60% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 205 60% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 205 59% 44%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 205 30% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 205 30% 14.9%;
+    --muted-foreground: 205 20% 63.9%;
+    --accent: 180 72% 59%;
+    --accent-foreground: 205 60% 10%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 205 30% 14.9%;
+    --input: 205 30% 14.9%;
+    --ring: 205 59% 44%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* CLASES DE IMPRESIÓN PROFESIONAL */
+.only-print {
+  display: none !important;
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 10mm;
+  }
+  
+  html, body {
+    background-color: white !important;
+    color: black !important;
+    width: 210mm;
+    height: auto;
+    font-size: 11pt;
+  }
+
+  /* Forzar visibilidad de colores y fondos en PDF */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+
+  /* Ocultar elementos innecesarios */
+  .print-hidden, 
+  header, 
+  nav, 
+  aside, 
+  .sidebar-inset header,
+  [role="tablist"],
+  .tabs-list,
+  button,
+  .print-none {
+    display: none !important;
+  }
+
+  /* Mostrar sección de reporte consolidado */
+  .only-print {
+    display: block !important;
+    visibility: visible !important;
+  }
+
+  /* Ajustes de diseño para PDF */
+  .break-inside-avoid {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+    margin-bottom: 2rem !important;
+  }
+
+  .break-before-page {
+    break-before: page !important;
+    page-break-before: page !important;
+    margin-top: 2rem !important;
+  }
+
+  .shadow-md, .shadow-sm, .shadow-xl, .shadow-lg {
+    box-shadow: none !important;
+    border: 1px solid rgba(0,0,0,0.1) !important;
+  }
+
+  /* Colores de marca forzados para PDF */
+  .bg-primary { background-color: #1e74ad !important; color: white !important; }
+  .bg-accent { background-color: #4ed9d9 !important; color: black !important; }
+  .bg-primary\/5 { background-color: rgba(30, 116, 173, 0.05) !important; }
+  .bg-accent\/5 { background-color: rgba(78, 217, 217, 0.05) !important; }
+  .text-primary { color: #1e74ad !important; }
+  .text-blue-800 { color: #1e40af !important; }
+  .text-blue-900 { color: #1e3a8a !important; }
+  
+  main {
+    padding: 0 !important;
+    margin: 0 !important;
+    display: block !important;
+  }
+
+  .card {
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 0.5rem !important;
+    overflow: hidden !important;
+  }
+
+  /* Asegurar que las gráficas sean visibles */
+  .recharts-responsive-container {
+    height: 250px !important;
+    width: 100% !important;
+  }
+}

@@ -1,0 +1,325 @@
+
+{
+  "entities": {
+    "Zone": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Zone",
+      "type": "object",
+      "description": "Represents a geographical or logical area used for grouping client cards and generating reports. All digital and physical card entries are associated with a zone.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Zone entity."
+        },
+        "name": {
+          "type": "string",
+          "description": "The human-readable name of the zone (e.g., 'North Region', 'Downtown Branch')."
+        },
+        "description": {
+          "type": "string",
+          "description": "An optional, more detailed description of the zone, its purpose, or boundaries."
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp when the zone record was created.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Timestamp when the zone record was last updated.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "DigitalCard": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "DigitalCard",
+      "type": "object",
+      "description": "Represents a client card record stored digitally in the system, managed by the 'Digital Card Management' feature.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the DigitalCard entity."
+        },
+        "cardNumber": {
+          "type": "string",
+          "description": "The primary identification number printed on the digital client card."
+        },
+        "clientName": {
+          "type": "string",
+          "description": "The full name of the client associated with this digital card."
+        },
+        "clientIdentifier": {
+          "type": "string",
+          "description": "An additional unique identifier for the client, such as a national ID (DNI) or tax ID, used for verification."
+        },
+        "issuedDate": {
+          "type": "string",
+          "description": "The date when the digital card was originally issued.",
+          "format": "date"
+        },
+        "expirationDate": {
+          "type": "string",
+          "description": "The date when the digital card is set to expire.",
+          "format": "date"
+        },
+        "status": {
+          "type": "string",
+          "description": "The current operational status of the digital card (e.g., 'Active', 'Inactive', 'Blocked', 'Pending')."
+        },
+        "zoneId": {
+          "type": "string",
+          "description": "Reference to the Zone this digital card belongs to for grouping and reporting. (Relationship: Zone 1:N DigitalCard)"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp when the digital card record was created in the system.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Timestamp when the digital card record was last updated.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "cardNumber",
+        "clientName",
+        "clientIdentifier",
+        "status",
+        "zoneId",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "CuadreRow": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "CuadreRow",
+      "type": "object",
+      "description": "Represents a row in the reconciliation sheet for a specific zone, tracking system totals vs physical statuses.",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "zoneId": {
+          "type": "string"
+        },
+        "pagina": {
+          "type": "number",
+          "description": "Page number from physical records."
+        },
+        "digitalTotal": {
+          "type": "number",
+          "description": "Count of active cards in system for this page."
+        },
+        "recogidas": {
+          "type": "number"
+        },
+        "pasadas": {
+          "type": "number"
+        },
+        "canceladas": {
+          "type": "number"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "zoneId",
+        "pagina",
+        "digitalTotal"
+      ]
+    },
+    "PhysicalCardEntry": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "PhysicalCardEntry",
+      "type": "object",
+      "description": "Represents data manually entered or captured from a physical client card, intended for comparison and reconciliation with digital records.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the PhysicalCardEntry entity."
+        },
+        "enteredCardNumber": {
+          "type": "string",
+          "description": "The primary identification number as entered or scanned from the physical client card."
+        },
+        "enteredClientName": {
+          "type": "string",
+          "description": "The full name of the client as entered from the physical card."
+        },
+        "enteredClientIdentifier": {
+          "type": "string",
+          "description": "An additional unique identifier for the client, such as a national ID (DNI) or tax ID, as entered from the physical card."
+        },
+        "inputDate": {
+          "type": "string",
+          "description": "Timestamp when this physical card data was manually entered or recorded in the system.",
+          "format": "date-time"
+        },
+        "zoneId": {
+          "type": "string",
+          "description": "Reference to the Zone where this physical card entry was made or belongs, for localized reconciliation. (Relationship: Zone 1:N PhysicalCardEntry)"
+        },
+        "notes": {
+          "type": "string",
+          "description": "Any additional manual notes or observations regarding this specific physical card entry."
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp when the physical card entry record was created.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Timestamp when the physical card entry record was last updated.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "enteredCardNumber",
+        "enteredClientName",
+        "inputDate",
+        "zoneId",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "Reconciliation": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Reconciliation",
+      "type": "object",
+      "description": "Records the outcome of a comparison and matching process between a PhysicalCardEntry and a DigitalCard, supporting AI suggestions and user-driven reconciliation.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Reconciliation entity."
+        },
+        "physicalCardEntryId": {
+          "type": "string",
+          "description": "Reference to the PhysicalCardEntry being reconciled. This forms a 1:1 relationship for a specific reconciliation event. (Relationship: PhysicalCardEntry 1:1 Reconciliation)"
+        },
+        "digitalCardId": {
+          "type": "string",
+          "description": "Reference to the DigitalCard that was matched (or attempted to be matched) with the physical entry. Can be null if the physical card remains unmatched. (Relationship: DigitalCard 1:N Reconciliation)"
+        },
+        "matchConfidence": {
+          "type": "number",
+          "description": "A confidence score (e.g., 0.0 to 1.0) indicating the strength of an AI-suggested match. Null if the match was manually made without AI input."
+        },
+        "matchReason": {
+          "type": "string",
+          "description": "A textual explanation for the suggested or confirmed match, either generated by the AI or provided by a user."
+        },
+        "status": {
+          "type": "string",
+          "description": "The final status of the reconciliation for this entry (e.g., 'Matched', 'Unmatched', 'Conflict', 'Reviewed')."
+        },
+        "discrepancies": {
+          "type": "array",
+          "description": "An array of strings, each describing a specific discrepancy identified between the physical entry and the digital card during reconciliation.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "reconciledBy": {
+          "type": "string",
+          "description": "The user ID of the person who performed or confirmed this reconciliation. This assumes an external authentication system for user management."
+        },
+        "reconciliationDate": {
+          "type": "string",
+          "description": "Timestamp when the reconciliation was performed or finalized.",
+          "format": "date-time"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp when this reconciliation record was created.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Timestamp when this reconciliation record was last updated.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "physicalCardEntryId",
+        "status",
+        "reconciliationDate",
+        "createdAt",
+        "updatedAt"
+      ]
+    }
+  },
+  "auth": {
+    "providers": [
+      "password",
+      "anonymous"
+    ]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/zones/{zoneId}",
+        "definition": {
+          "entityName": "Zone",
+          "schema": {
+            "$ref": "#/backend/entities/Zone"
+          },
+          "description": "Main collection for geographical or logical zones."
+        }
+      },
+      {
+        "path": "/digitalCards/{digitalCardId}",
+        "definition": {
+          "entityName": "DigitalCard",
+          "schema": {
+            "$ref": "#/backend/entities/DigitalCard"
+          },
+          "description": "Stores digital client card records."
+        }
+      },
+      {
+        "path": "/cuadreRows/{rowId}",
+        "definition": {
+          "entityName": "CuadreRow",
+          "schema": {
+            "$ref": "#/backend/entities/CuadreRow"
+          },
+          "description": "Reconciliation rows for zone sheets."
+        }
+      },
+      {
+        "path": "/physicalCardEntries/{physicalCardEntryId}",
+        "definition": {
+          "entityName": "PhysicalCardEntry",
+          "schema": {
+            "$ref": "#/backend/entities/PhysicalCardEntry"
+          },
+          "description": "Stores manually entered physical card data."
+        }
+      },
+      {
+        "path": "/reconciliations/{reconciliationId}",
+        "definition": {
+          "entityName": "Reconciliation",
+          "schema": {
+            "$ref": "#/backend/entities/Reconciliation"
+          },
+          "description": "Records the outcomes of matching physical and digital cards."
+        }
+      }
+    ]
+  }
+}

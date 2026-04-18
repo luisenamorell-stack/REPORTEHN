@@ -1,0 +1,30 @@
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    match /zones/{zoneId} {
+      allow read, write: if isSignedIn();
+    }
+
+    match /digitalCards/{digitalCardId} {
+      allow read, write: if isSignedIn();
+    }
+
+    match /cuadreRows/{rowId} {
+      allow read, write: if isSignedIn();
+    }
+
+    match /physicalCardEntries/{physicalCardEntryId} {
+      allow read, write: if isSignedIn();
+    }
+
+    match /reconciliations/{reconciliationId} {
+      allow read, write: if isSignedIn();
+    }
+  }
+}
